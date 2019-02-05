@@ -1,0 +1,1426 @@
+<!DOCTYPE HTML><html><head><title>Hancock - DLT Adapter API documentation</title><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="generator" content="https://github.com/raml2html/raml2html 6.4.2"><link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"><script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script><script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script><script type="text/javascript">
+      $(document).ready(function() {
+        $('.page-header pre code, .top-resource-description pre code, .modal-body pre code').each(function(i, block) {
+          hljs.highlightBlock(block);
+        });
+
+        $('[data-toggle]').click(function() {
+          var selector = $(this).data('target') + ' pre code';
+          $(selector).each(function(i, block) {
+            hljs.highlightBlock(block);
+          });
+        });
+
+        // open modal on hashes like #_action_get
+        $(window).bind('hashchange', function(e) {
+          var anchor_id = document.location.hash.substr(1); //strip #
+          var element = $('#' + anchor_id);
+
+          // do we have such element + is it a modal?  --> show it
+          if (element.length && element.hasClass('modal')) {
+            element.modal('show');
+          }
+        });
+
+        // execute hashchange on first page load
+        $(window).trigger('hashchange');
+
+        // remove url fragment on modal hide
+        $('.modal').on('hidden.bs.modal', function() {
+          try {
+            if (history && history.replaceState) {
+                history.replaceState({}, '', '#');
+            }
+          } catch(e) {}
+        });
+      });
+    </script><style>
+      .hljs {
+        background: transparent;
+      }
+      .parent {
+        color: #999;
+      }
+      .list-group-item > .badge {
+        float: none;
+        margin-right: 6px;
+      }
+      .panel-title > .methods {
+        float: right;
+      }
+      .badge {
+        border-radius: 0;
+        text-transform: uppercase;
+        width: 70px;
+        font-weight: normal;
+        color: #f3f3f6;
+        line-height: normal;
+      }
+      .badge_get {
+        background-color: #63a8e2;
+      }
+      .badge_post {
+        background-color: #6cbd7d;
+      }
+      .badge_put {
+        background-color: #22bac4;
+      }
+      .badge_delete {
+        background-color: #d26460;
+      }
+      .badge_patch {
+        background-color: #ccc444;
+      }
+      .list-group, .panel-group {
+        margin-bottom: 0;
+      }
+      .panel-group .panel+.panel-white {
+        margin-top: 0;
+      }
+      .panel-group .panel-white {
+        border-bottom: 1px solid #F5F5F5;
+        border-radius: 0;
+      }
+      .panel-white:last-child {
+        border-bottom-color: white;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+      }
+      .panel-white .panel-heading {
+        background: white;
+      }
+      .tab-pane ul {
+        padding-left: 2em;
+      }
+      .tab-pane h1 {
+        font-size: 1.3em;
+      }
+      .tab-pane h2 {
+        font-size: 1.2em;
+        padding-bottom: 4px;
+        border-bottom: 1px solid #ddd;
+      }
+      .tab-pane h3 {
+        font-size: 1.1em;
+      }
+      .tab-content {
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        padding: 10px;
+      }
+      #sidebar {
+        margin-top: 30px;
+        padding-right: 5px;
+        overflow: auto;
+        height: 90%;
+      }
+      .top-resource-description {
+        border-bottom: 1px solid #ddd;
+        background: #fcfcfc;
+        padding: 15px 15px 0 15px;
+        margin: -15px -15px 10px -15px;
+      }
+      .resource-description {
+        border-bottom: 1px solid #fcfcfc;
+        background: #fcfcfc;
+        padding: 15px 15px 0 15px;
+        margin: -15px -15px 10px -15px;
+      }
+      .resource-description p:last-child {
+        margin: 0;
+      }
+      .list-group .badge {
+        float: left;
+      }
+      .method_description {
+        margin-left: 85px;
+      }
+      .method_description p:last-child {
+        margin: 0;
+      }
+      .list-group-item {
+        cursor: pointer;
+      }
+      .list-group-item:hover {
+        background-color: #f5f5f5;
+      }
+      pre code {
+        overflow: auto;
+        word-wrap: normal;
+        white-space: pre;
+      }
+      .items {
+        background: #f5f5f5;
+        color: #333;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 9.5px;
+        margin: 0 0 10px;
+        font-size: 13px;
+        line-height: 1.42857143;
+      }
+      .examples {
+        margin-left: 0.5em;
+      }
+      .resource-modal li > ul {
+        margin-bottom: 1em;
+      }
+    </style></head><body data-spy="scroll" data-target="#sidebar"><div class="container"><div class="row"><div class="col-md-9" role="main"><div class="page-header"><h1>Hancock - DLT Adapter API documentation <small>version v1</small></h1><p>https://host/{version}/dlt-adapter</p><ul><li><strong>version</strong>: <em>required (v1)</em></li></ul><h3 id="summary"><a href="#summary">Summary</a></h3><p><strong><em>Summary</em></strong></p></div><div class="panel panel-default"><div class="panel-heading"><h3 id="dlt_type_" class="panel-title">DLT</h3></div><div class="panel-body"><div class="top-resource-description"><p>API to adapt transactions to specific DLT</p></div><div class="panel-group"><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_dlt_type__smartcontracts"><span class="parent">/{dlt_type}</span>/smartcontracts</a> <span class="methods"><a href="#dlt_type__smartcontracts_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_dlt_type__smartcontracts" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#dlt_type__smartcontracts_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Retrieve the list of all smart contracts registered in Hancock</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="dlt_type__smartcontracts_get"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/{dlt_type}</span>/smartcontracts</h4></div><div class="modal-body"><div class="alert alert-info"><p>Retrieve the list of all smart contracts registered in Hancock</p></div><ul class="nav nav-tabs"><li class="active"><a href="#dlt_type__smartcontracts_get_request" data-toggle="tab">Request</a></li><li><a href="#dlt_type__smartcontracts_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dlt_type__smartcontracts_get_request"><h3>URI Parameters</h3><ul><li><strong>dlt_type</strong>: <em>required (string)</em><p>Dlt to work with</p></li></ul></div><div class="tab-pane" id="dlt_type__smartcontracts_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Registered Smart Contract Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    },
+    "data": {
+      "list":{
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "address": {
+            "type": "string"
+            },
+            "alias": {
+              "type": "string"
+            },
+            "abi": {
+              "type": "array"
+            },
+            "required": [ "address", "alias", "abi" ]
+          }
+        }
+      }
+    }
+  }
+}
+</code></pre><h2>HTTP status code <a href="http://httpstatus.es/500" target="_blank">500</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Generic Response Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    }
+  },
+  "required": [ "result" ]
+}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_dlt_type__smartcontracts__address_alias_"><span class="parent">/{dlt_type}/smartcontracts</span>/{address|alias}</a> <span class="methods"><a href="#dlt_type__smartcontracts__address_alias__get"><span class="badge badge_get">get</span></a> <a href="#dlt_type__smartcontracts__address_alias__delete"><span class="badge badge_delete">delete</span></a></span></h4></div><div id="panel_dlt_type__smartcontracts__address_alias_" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#dlt_type__smartcontracts__address_alias__get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Retrieve ABI from registered Smart Contract</p></div><div class="clearfix"></div></div><div onclick="window.location.href = '#dlt_type__smartcontracts__address_alias__delete'" class="list-group-item"><span class="badge badge_delete">delete</span><div class="method_description"><p>Unregister the Smart Contract in Hancock</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="dlt_type__smartcontracts__address_alias__get"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/{dlt_type}/smartcontracts</span>/{address|alias}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Retrieve ABI from registered Smart Contract</p></div><ul class="nav nav-tabs"><li class="active"><a href="#dlt_type__smartcontracts__address_alias__get_request" data-toggle="tab">Request</a></li><li><a href="#dlt_type__smartcontracts__address_alias__get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dlt_type__smartcontracts__address_alias__get_request"><h3>URI Parameters</h3><ul><li><strong>dlt_type</strong>: <em>required (string)</em><p>Dlt to work with</p></li><li><strong>address|alias</strong>: <em>required (string)</em></li></ul></div><div class="tab-pane" id="dlt_type__smartcontracts__address_alias__get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Registered Smart Contract Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    },
+    "data": {
+      "address": {
+        "type": "string"
+      },
+      "alias": {
+        "type": "string"
+      },
+      "abi": {
+        "type": "array"
+      },
+    "required": [ "address", "alias", "abi" ]
+    }
+  }
+}
+</code></pre><h2>HTTP status code <a href="http://httpstatus.es/404" target="_blank">404</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Generic Response Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    }
+  },
+  "required": [ "result" ]
+}</code></pre><h2>HTTP status code <a href="http://httpstatus.es/500" target="_blank">500</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Generic Response Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    }
+  },
+  "required": [ "result" ]
+}</code></pre></div></div></div></div></div></div><div class="modal fade" tabindex="0" id="dlt_type__smartcontracts__address_alias__delete"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_delete">delete</span> <span class="parent">/{dlt_type}/smartcontracts</span>/{address|alias}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Unregister the Smart Contract in Hancock</p></div><ul class="nav nav-tabs"><li class="active"><a href="#dlt_type__smartcontracts__address_alias__delete_request" data-toggle="tab">Request</a></li><li><a href="#dlt_type__smartcontracts__address_alias__delete_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dlt_type__smartcontracts__address_alias__delete_request"><h3>URI Parameters</h3><ul><li><strong>dlt_type</strong>: <em>required (string)</em><p>Dlt to work with</p></li><li><strong>address|alias</strong>: <em>required (string)</em></li></ul></div><div class="tab-pane" id="dlt_type__smartcontracts__address_alias__delete_response"><h2>HTTP status code <a href="http://httpstatus.es/204" target="_blank">204</a></h2><h2>HTTP status code <a href="http://httpstatus.es/500" target="_blank">500</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Generic Response Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    }
+  },
+  "required": [ "result" ]
+}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_dlt_type__smartcontracts_deploy"><span class="parent">/{dlt_type}/smartcontracts</span>/deploy</a> <span class="methods"><a href="#dlt_type__smartcontracts_deploy_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_dlt_type__smartcontracts_deploy" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#dlt_type__smartcontracts_deploy_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Adapt a Smart Contract deployment transaction</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="dlt_type__smartcontracts_deploy_post"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/{dlt_type}/smartcontracts</span>/deploy</h4></div><div class="modal-body"><div class="alert alert-info"><p>Adapt a Smart Contract deployment transaction</p></div><ul class="nav nav-tabs"><li class="active"><a href="#dlt_type__smartcontracts_deploy_post_request" data-toggle="tab">Request</a></li><li><a href="#dlt_type__smartcontracts_deploy_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dlt_type__smartcontracts_deploy_post_request"><h3>URI Parameters</h3><ul><li><strong>dlt_type</strong>: <em>required (string)</em><p>Dlt to work with</p></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Transactions schema",
+  "type": "object",
+  "properties": {
+    "method": {
+      "type": "string",
+      "description": "Method to invoke in the smart contract"
+    },
+    "params": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Array of params to pass to the method"
+    },
+    "urlBase": {
+      "type": "string",
+      "description": "Url where are stored the abi and the bin of the smart contract to invoke"
+    },
+    "from": {
+      "type": "string",
+      "description": "Address that will sign the deployment"
+    }
+  },
+  "required": [ "method", "from", "urlBase" ]
+}
+
+</code></pre></div><div class="tab-pane" id="dlt_type__smartcontracts_deploy_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Created Smart Contract Response Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "nonce": {
+          "type": "string"
+        },
+        "from": {
+          "type": "string"
+        },
+        "data": {
+          "type": "string"
+        },
+        "gasPrice": {
+          "type": "string"
+        },
+        "gas": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [ "result", "data" ]
+}
+</code></pre><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><h2>HTTP status code <a href="http://httpstatus.es/500" target="_blank">500</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Generic Response Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    }
+  },
+  "required": [ "result" ]
+}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_dlt_type__smartcontracts_invoke"><span class="parent">/{dlt_type}/smartcontracts</span>/invoke</a> <span class="methods"><a href="#dlt_type__smartcontracts_invoke_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_dlt_type__smartcontracts_invoke" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#dlt_type__smartcontracts_invoke_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Adapt a Smart Contract invocation transaction</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="dlt_type__smartcontracts_invoke_post"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/{dlt_type}/smartcontracts</span>/invoke</h4></div><div class="modal-body"><div class="alert alert-info"><p>Adapt a Smart Contract invocation transaction</p></div><ul class="nav nav-tabs"><li class="active"><a href="#dlt_type__smartcontracts_invoke_post_request" data-toggle="tab">Request</a></li><li><a href="#dlt_type__smartcontracts_invoke_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dlt_type__smartcontracts_invoke_post_request"><h3>URI Parameters</h3><ul><li><strong>dlt_type</strong>: <em>required (string)</em><p>Dlt to work with</p></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Transactions schema",
+  "type": "object",
+  "properties": {
+    "method": {
+      "type": "string",
+      "description": "Method to invoke in the smart contract"
+    },
+    "action": {
+      "type": "string",
+      "enum": ["send", "call"]
+    },
+    "params": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Params to pass to the method"
+    },
+    "urlBase": {
+      "type": "string",
+      "description": "Url where are stored the abi and the bin of the smart contract to invoke"
+    },
+    "from": {
+      "type": "string"
+    },
+    "to": {
+      "type": "string",
+      "description": "Address of the smart contract to invoke"
+    }
+  },
+  "required": [ "method", "urlBase", "from", "to" ]
+}
+
+</code></pre></div><div class="tab-pane" id="dlt_type__smartcontracts_invoke_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Invoked Smart Contract Response Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "nonce": {
+          "type": "string"
+        },
+        "from": {
+          "type": "string"
+        },
+        "data": {
+          "type": "string"
+        },
+        "gas": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        },
+        "gasPrice": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [ "result", "data" ]
+}
+</code></pre><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><h2>HTTP status code <a href="http://httpstatus.es/500" target="_blank">500</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Generic Response Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    }
+  },
+  "required": [ "result" ]
+}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_dlt_type__smartcontracts_invoke__address_alias_"><span class="parent">/{dlt_type}/smartcontracts/invoke</span>/{address|alias}</a> <span class="methods"><a href="#dlt_type__smartcontracts_invoke__address_alias__post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_dlt_type__smartcontracts_invoke__address_alias_" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#dlt_type__smartcontracts_invoke__address_alias__post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Adapt transaction that will invoke a method in the registered Smart Contract</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="dlt_type__smartcontracts_invoke__address_alias__post"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/{dlt_type}/smartcontracts/invoke</span>/{address|alias}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Adapt transaction that will invoke a method in the registered Smart Contract</p></div><ul class="nav nav-tabs"><li class="active"><a href="#dlt_type__smartcontracts_invoke__address_alias__post_request" data-toggle="tab">Request</a></li><li><a href="#dlt_type__smartcontracts_invoke__address_alias__post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dlt_type__smartcontracts_invoke__address_alias__post_request"><h3>URI Parameters</h3><ul><li><strong>dlt_type</strong>: <em>required (string)</em><p>Dlt to work with</p></li><li><strong>address|alias</strong>: <em>required (string)</em></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Transaction Invoke By Param schema",
+  "type": "object",
+  "properties": {
+    "method": {
+      "type": "string",
+      "description": "Method to invoke in the smart contract"
+    },
+    "action": {
+      "type": "string",
+      "enum": ["send", "call"]
+    },
+    "params": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Params to pass to the method to invoke in the smart contract"
+    },
+    "from": {
+      "type": "string",
+      "description": "Address that invoke the smart contract"
+    }
+  },
+  "required": [ "method", "from" ]
+}
+
+</code></pre></div><div class="tab-pane" id="dlt_type__smartcontracts_invoke__address_alias__post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Invoked Smart Contract Response Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "nonce": {
+          "type": "string"
+        },
+        "from": {
+          "type": "string"
+        },
+        "data": {
+          "type": "string"
+        },
+        "gas": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        },
+        "gasPrice": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [ "result", "data" ]
+}
+</code></pre><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><h2>HTTP status code <a href="http://httpstatus.es/404" target="_blank">404</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Generic Response Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    }
+  },
+  "required": [ "result" ]
+}</code></pre><h2>HTTP status code <a href="http://httpstatus.es/500" target="_blank">500</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Generic Response Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    }
+  },
+  "required": [ "result" ]
+}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_dlt_type__smartcontracts_register"><span class="parent">/{dlt_type}/smartcontracts</span>/register</a> <span class="methods"><a href="#dlt_type__smartcontracts_register_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_dlt_type__smartcontracts_register" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#dlt_type__smartcontracts_register_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Register a deployed Smart Contract</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="dlt_type__smartcontracts_register_post"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/{dlt_type}/smartcontracts</span>/register</h4></div><div class="modal-body"><div class="alert alert-info"><p>Register a deployed Smart Contract</p></div><ul class="nav nav-tabs"><li class="active"><a href="#dlt_type__smartcontracts_register_post_request" data-toggle="tab">Request</a></li><li><a href="#dlt_type__smartcontracts_register_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dlt_type__smartcontracts_register_post_request"><h3>URI Parameters</h3><ul><li><strong>dlt_type</strong>: <em>required (string)</em><p>Dlt to work with</p></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Smart Contract creation schema",
+  "type": "object",
+  "properties": {
+    "address": {
+      "$ref": "#/definitions/nonEmptyString",
+      "description": "Address of the Smart Contrant in the DLT"
+    },
+    "alias": {
+      "$ref": "#/definitions/nonEmptyString",
+      "description": "Alias to use to register in Hancock"
+    },
+    "abi": {
+      "type": "array",
+      "description": "Abi of the Smart Contract"
+    }
+  },
+  "required": [ "address", "alias", "abi" ],
+  "definitions": {
+    "nonEmptyString": {
+        "type": "string",
+        "minLength": 1
+    }
+  }
+}
+</code></pre></div><div class="tab-pane" id="dlt_type__smartcontracts_register_post_response"><h2>HTTP status code <a href="http://httpstatus.es/201" target="_blank">201</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Generic Response Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    }
+  },
+  "required": [ "result" ]
+}</code></pre><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><h2>HTTP status code <a href="http://httpstatus.es/409" target="_blank">409</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Generic Response Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    }
+  },
+  "required": [ "result" ]
+}</code></pre><h2>HTTP status code <a href="http://httpstatus.es/500" target="_blank">500</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Generic Response Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    }
+  },
+  "required": [ "result" ]
+}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_dlt_type__transfers"><span class="parent">/{dlt_type}</span>/transfers</a> <span class="methods"><a href="#dlt_type__transfers_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_dlt_type__transfers" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#dlt_type__transfers_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Adapt a transfer call to the DLT between to address</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="dlt_type__transfers_post"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/{dlt_type}</span>/transfers</h4></div><div class="modal-body"><div class="alert alert-info"><p>Adapt a transfer call to the DLT between to address</p></div><ul class="nav nav-tabs"><li class="active"><a href="#dlt_type__transfers_post_request" data-toggle="tab">Request</a></li><li><a href="#dlt_type__transfers_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dlt_type__transfers_post_request"><h3>URI Parameters</h3><ul><li><strong>dlt_type</strong>: <em>required (string)</em><p>Dlt to work with</p></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+    "$schema": "http://json-schema.org/schema",
+    "description": "Transfer schema",
+    "type": "object",
+    "properties": {
+      "from": {
+        "type": "string"
+      },
+      "to": {
+        "type": "string"
+      },
+      "value": {
+        "type": "string"
+      },
+      "data": {
+        "type": "string"
+      }
+    },
+    "required": [ "from", "to", "value" ]
+  }
+  
+  </code></pre></div><div class="tab-pane" id="dlt_type__transfers_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+    "$schema": "http://json-schema.org/schema",
+    "description": "Transfer response schema",
+    "type": "object",
+    "properties": {
+      "result": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [ "code", "description" ]
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "nonce": {
+            "type": "string"
+          },
+          "from": {
+            "type": "string"
+          },
+          "gas": {
+            "type": "string"
+          },
+          "gasPrice": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "data": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "required": [ "result", "data" ]
+  }
+  
+  </code></pre><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><h2>HTTP status code <a href="http://httpstatus.es/500" target="_blank">500</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Generic Response Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    }
+  },
+  "required": [ "result" ]
+}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_dlt_type__balance__address_"><span class="parent">/{dlt_type}/balance</span>/{address}</a> <span class="methods"><a href="#dlt_type__balance__address__get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_dlt_type__balance__address_" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#dlt_type__balance__address__get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Obtain the native cryptocurrency balance of an address</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="dlt_type__balance__address__get"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/{dlt_type}/balance</span>/{address}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Obtain the native cryptocurrency balance of an address</p></div><ul class="nav nav-tabs"><li class="active"><a href="#dlt_type__balance__address__get_request" data-toggle="tab">Request</a></li><li><a href="#dlt_type__balance__address__get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dlt_type__balance__address__get_request"><h3>URI Parameters</h3><ul><li><strong>dlt_type</strong>: <em>required (string)</em><p>Dlt to work with</p></li><li><strong>address</strong>: <em>required (string)</em></li></ul></div><div class="tab-pane" id="dlt_type__balance__address__get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+    "$schema": "http://json-schema.org/schema",
+    "description": "GetBalance Response Schema",
+    "type": "object",
+    "properties": {
+      "result": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [ "code", "description" ]
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "balance": {
+            "type": "string",
+            "description": "Balance in wei"
+          }
+        }
+      }
+    },
+    "required": [ "result", "data" ]
+  }
+  </code></pre><h2>HTTP status code <a href="http://httpstatus.es/500" target="_blank">500</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+    "$schema": "http://json-schema.org/schema",
+    "description": "GetBalance Response Schema",
+    "type": "object",
+    "properties": {
+      "result": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [ "code", "description" ]
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "balance": {
+            "type": "string",
+            "description": "Balance in wei"
+          }
+        }
+      }
+    },
+    "required": [ "result", "data" ]
+  }
+  </code></pre></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_dlt_type__token"><span class="parent">/{dlt_type}</span>/token</a> <span class="methods"><a href="#dlt_type__token_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_dlt_type__token" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#dlt_type__token_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Retrieve the list of all token registered in Hancock</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="dlt_type__token_get"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/{dlt_type}</span>/token</h4></div><div class="modal-body"><div class="alert alert-info"><p>Retrieve the list of all token registered in Hancock</p></div><ul class="nav nav-tabs"><li class="active"><a href="#dlt_type__token_get_request" data-toggle="tab">Request</a></li><li><a href="#dlt_type__token_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dlt_type__token_get_request"><h3>URI Parameters</h3><ul><li><strong>dlt_type</strong>: <em>required (string)</em><p>Dlt to work with</p></li></ul></div><div class="tab-pane" id="dlt_type__token_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Registered Smart Contract Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    },
+    "data": {
+      "list":{
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "address": {
+            "type": "string"
+            },
+            "alias": {
+              "type": "string"
+            },
+            "abi": {
+              "type": "array"
+            },
+            "required": [ "address", "alias", "abi" ]
+          }
+        }
+      }
+    }
+  }
+}
+</code></pre><h2>HTTP status code <a href="http://httpstatus.es/500" target="_blank">500</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Generic Response Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    }
+  },
+  "required": [ "result" ]
+}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_dlt_type__token__address_alias_"><span class="parent">/{dlt_type}/token</span>/{address|alias}</a> <span class="methods"><a href="#dlt_type__token__address_alias__delete"><span class="badge badge_delete">delete</span></a></span></h4></div><div id="panel_dlt_type__token__address_alias_" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#dlt_type__token__address_alias__delete'" class="list-group-item"><span class="badge badge_delete">delete</span><div class="method_description"><p>Unregister the Token in Hancock</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="dlt_type__token__address_alias__delete"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_delete">delete</span> <span class="parent">/{dlt_type}/token</span>/{address|alias}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Unregister the Token in Hancock</p></div><ul class="nav nav-tabs"><li class="active"><a href="#dlt_type__token__address_alias__delete_request" data-toggle="tab">Request</a></li><li><a href="#dlt_type__token__address_alias__delete_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dlt_type__token__address_alias__delete_request"><h3>URI Parameters</h3><ul><li><strong>dlt_type</strong>: <em>required (string)</em><p>Dlt to work with</p></li><li><strong>address|alias</strong>: <em>required (string)</em></li></ul></div><div class="tab-pane" id="dlt_type__token__address_alias__delete_response"><h2>HTTP status code <a href="http://httpstatus.es/204" target="_blank">204</a></h2><h2>HTTP status code <a href="http://httpstatus.es/500" target="_blank">500</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Generic Response Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    }
+  },
+  "required": [ "result" ]
+}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_dlt_type__token__address_alias__balanceof__address_"><span class="parent">/{dlt_type}/token/{address|alias}/balanceOf</span>/{address}</a> <span class="methods"><a href="#dlt_type__token__address_alias__balanceof__address__get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_dlt_type__token__address_alias__balanceof__address_" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#dlt_type__token__address_alias__balanceof__address__get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Obtain the native ERC20 token currency balance of an address</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="dlt_type__token__address_alias__balanceof__address__get"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/{dlt_type}/token/{address|alias}/balanceOf</span>/{address}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Obtain the native ERC20 token currency balance of an address</p></div><ul class="nav nav-tabs"><li class="active"><a href="#dlt_type__token__address_alias__balanceof__address__get_request" data-toggle="tab">Request</a></li><li><a href="#dlt_type__token__address_alias__balanceof__address__get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dlt_type__token__address_alias__balanceof__address__get_request"><h3>URI Parameters</h3><ul><li><strong>dlt_type</strong>: <em>required (string)</em><p>Dlt to work with</p></li><li><strong>address|alias</strong>: <em>required (string)</em></li><li><strong>address</strong>: <em>required (string)</em></li></ul></div><div class="tab-pane" id="dlt_type__token__address_alias__balanceof__address__get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+    "$schema": "http://json-schema.org/schema",
+    "description": "GetBalanceTokenResponse Response Schema",
+    "type": "object",
+    "properties": {
+      "result": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [ "code", "description" ]
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "balance": {
+            "type": "string",
+            "description": "Get the token balance for account"
+          }
+        }
+      }
+    },
+    "required": [ "result", "data" ]
+  }
+  </code></pre><h2>HTTP status code <a href="http://httpstatus.es/500" target="_blank">500</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Generic Response Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    }
+  },
+  "required": [ "result" ]
+}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_dlt_type__token__address_alias__metadata"><span class="parent">/{dlt_type}/token/{address|alias}</span>/metadata</a> <span class="methods"><a href="#dlt_type__token__address_alias__metadata_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_dlt_type__token__address_alias__metadata" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#dlt_type__token__address_alias__metadata_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Obtain the info associated to the ERC20 Token</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="dlt_type__token__address_alias__metadata_get"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/{dlt_type}/token/{address|alias}</span>/metadata</h4></div><div class="modal-body"><div class="alert alert-info"><p>Obtain the info associated to the ERC20 Token</p></div><ul class="nav nav-tabs"><li class="active"><a href="#dlt_type__token__address_alias__metadata_get_request" data-toggle="tab">Request</a></li><li><a href="#dlt_type__token__address_alias__metadata_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dlt_type__token__address_alias__metadata_get_request"><h3>URI Parameters</h3><ul><li><strong>dlt_type</strong>: <em>required (string)</em><p>Dlt to work with</p></li><li><strong>address|alias</strong>: <em>required (string)</em></li></ul></div><div class="tab-pane" id="dlt_type__token__address_alias__metadata_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+    "$schema": "http://json-schema.org/schema",
+    "description": "GetBalanceTokenResponse Response Schema",
+    "type": "object",
+    "properties": {
+      "result": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [ "code", "description" ]
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "balance": {
+            "type": "string",
+            "description": "Get the token balance for account"
+          }
+        }
+      }
+    },
+    "required": [ "result", "data" ]
+  }
+  </code></pre><h2>HTTP status code <a href="http://httpstatus.es/500" target="_blank">500</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Generic Response Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    }
+  },
+  "required": [ "result" ]
+}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_dlt_type__token__address_alias__transfer"><span class="parent">/{dlt_type}/token/{address|alias}</span>/transfer</a> <span class="methods"><a href="#dlt_type__token__address_alias__transfer_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_dlt_type__token__address_alias__transfer" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#dlt_type__token__address_alias__transfer_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Transfer ERC20 tokens between two addresses by Query</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="dlt_type__token__address_alias__transfer_post"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/{dlt_type}/token/{address|alias}</span>/transfer</h4></div><div class="modal-body"><div class="alert alert-info"><p>Transfer ERC20 tokens between two addresses by Query</p></div><ul class="nav nav-tabs"><li class="active"><a href="#dlt_type__token__address_alias__transfer_post_request" data-toggle="tab">Request</a></li><li><a href="#dlt_type__token__address_alias__transfer_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dlt_type__token__address_alias__transfer_post_request"><h3>URI Parameters</h3><ul><li><strong>dlt_type</strong>: <em>required (string)</em><p>Dlt to work with</p></li><li><strong>address|alias</strong>: <em>required (string)</em></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Transfer Token schema",
+  "type": "object",
+  "properties": {
+    "from": {
+      "type": "string"
+    },
+    "to": {
+      "type": "string"
+    },
+    "value": {
+      "type": "string"
+    }
+  },
+  "required": [ "from", "to", "value" ]
+}</code></pre></div><div class="tab-pane" id="dlt_type__token__address_alias__transfer_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><h2>HTTP status code <a href="http://httpstatus.es/500" target="_blank">500</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Generic Response Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    }
+  },
+  "required": [ "result" ]
+}</code></pre><h2>HTTP status code <a href="http://httpstatus.es/body" target="_blank">body</a></h2></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_dlt_type__token__address_alias__transferfrom"><span class="parent">/{dlt_type}/token/{address|alias}</span>/transferFrom</a> <span class="methods"><a href="#dlt_type__token__address_alias__transferfrom_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_dlt_type__token__address_alias__transferfrom" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#dlt_type__token__address_alias__transferfrom_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Transfer ERC20 tokens between two addresses by Query</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="dlt_type__token__address_alias__transferfrom_post"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/{dlt_type}/token/{address|alias}</span>/transferFrom</h4></div><div class="modal-body"><div class="alert alert-info"><p>Transfer ERC20 tokens between two addresses by Query</p></div><ul class="nav nav-tabs"><li class="active"><a href="#dlt_type__token__address_alias__transferfrom_post_request" data-toggle="tab">Request</a></li><li><a href="#dlt_type__token__address_alias__transferfrom_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dlt_type__token__address_alias__transferfrom_post_request"><h3>URI Parameters</h3><ul><li><strong>dlt_type</strong>: <em>required (string)</em><p>Dlt to work with</p></li><li><strong>address|alias</strong>: <em>required (string)</em></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Transfer Token schema",
+  "type": "object",
+  "properties": {
+    "from": {
+      "type": "string",
+      "description": "The address which invoke the method"
+    },
+    "sender": {
+      "type": "string",
+      "description": "The address which is transferring the tokens"
+    },
+    "to": {
+      "type": "string",
+      "description": "The address which is receiving the tokens"
+    },
+    "value": {
+      "type": "string"
+    }
+  },
+  "required": [ "from", "sender", "to", "value" ]
+}</code></pre></div><div class="tab-pane" id="dlt_type__token__address_alias__transferfrom_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><h2>HTTP status code <a href="http://httpstatus.es/500" target="_blank">500</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Generic Response Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    }
+  },
+  "required": [ "result" ]
+}</code></pre><h2>HTTP status code <a href="http://httpstatus.es/body" target="_blank">body</a></h2></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_dlt_type__token__address_alias__approve"><span class="parent">/{dlt_type}/token/{address|alias}</span>/approve</a> <span class="methods"><a href="#dlt_type__token__address_alias__approve_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_dlt_type__token__address_alias__approve" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#dlt_type__token__address_alias__approve_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Token ERC20 owner can approve for spender to transfer tokens from the token owner&#39;s account by query</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="dlt_type__token__address_alias__approve_post"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/{dlt_type}/token/{address|alias}</span>/approve</h4></div><div class="modal-body"><div class="alert alert-info"><p>Token ERC20 owner can approve for spender to transfer tokens from the token owner&#39;s account by query</p></div><ul class="nav nav-tabs"><li class="active"><a href="#dlt_type__token__address_alias__approve_post_request" data-toggle="tab">Request</a></li><li><a href="#dlt_type__token__address_alias__approve_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dlt_type__token__address_alias__approve_post_request"><h3>URI Parameters</h3><ul><li><strong>dlt_type</strong>: <em>required (string)</em><p>Dlt to work with</p></li><li><strong>address|alias</strong>: <em>required (string)</em></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Approve Transfer Token schema",
+  "type": "object",
+  "properties": {
+    "from": {
+      "type": "string"
+    },
+    "spender": {
+      "type": "string"
+    },
+    "value": {
+      "type": "string"
+    }
+  },
+  "required": [ "from", "spender", "value" ]
+}</code></pre></div><div class="tab-pane" id="dlt_type__token__address_alias__approve_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><h2>HTTP status code <a href="http://httpstatus.es/500" target="_blank">500</a></h2><h2>HTTP status code <a href="http://httpstatus.es/" target="_blank"></a></h2></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_dlt_type__token__address_alias__allowance"><span class="parent">/{dlt_type}/token/{address|alias}</span>/allowance</a> <span class="methods"><a href="#dlt_type__token__address_alias__allowance_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_dlt_type__token__address_alias__allowance" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#dlt_type__token__address_alias__allowance_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Provides the number of tokens allowed to be transferred from a given address by another given address by query</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="dlt_type__token__address_alias__allowance_post"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/{dlt_type}/token/{address|alias}</span>/allowance</h4></div><div class="modal-body"><div class="alert alert-info"><p>Provides the number of tokens allowed to be transferred from a given address by another given address by query</p></div><ul class="nav nav-tabs"><li class="active"><a href="#dlt_type__token__address_alias__allowance_post_request" data-toggle="tab">Request</a></li><li><a href="#dlt_type__token__address_alias__allowance_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dlt_type__token__address_alias__allowance_post_request"><h3>URI Parameters</h3><ul><li><strong>dlt_type</strong>: <em>required (string)</em><p>Dlt to work with</p></li><li><strong>address|alias</strong>: <em>required (string)</em></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>
+{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Allowance Token by query schema",
+  "type": "object",
+  "properties": {
+    "from": {
+      "type": "string"
+    },
+    "tokenOwner": {
+      "type": "string",
+      "description": "address of the owner of the tokens"
+    },
+    "spender": {
+      "type": "string",
+      "description": "address which is allowed to spent the tokens"
+    }
+  },
+  "required": [ "from", "tokenOwner", "spender"]
+}</code></pre></div><div class="tab-pane" id="dlt_type__token__address_alias__allowance_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><h2>HTTP status code <a href="http://httpstatus.es/500" target="_blank">500</a></h2><h2>HTTP status code <a href="http://httpstatus.es/" target="_blank"></a></h2></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_dlt_type__token_balanceof"><span class="parent">/{dlt_type}/token</span>/balanceOf</a> <span class="methods"><a href="#dlt_type__token_balanceof_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_dlt_type__token_balanceof" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#dlt_type__token_balanceof_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Obtain the native ERC20 token currency balance of an address</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="dlt_type__token_balanceof_get"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/{dlt_type}/token</span>/balanceOf</h4></div><div class="modal-body"><div class="alert alert-info"><p>Obtain the native ERC20 token currency balance of an address</p></div><ul class="nav nav-tabs"><li class="active"><a href="#dlt_type__token_balanceof_get_request" data-toggle="tab">Request</a></li><li><a href="#dlt_type__token_balanceof_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dlt_type__token_balanceof_get_request"><h3>URI Parameters</h3><ul><li><strong>dlt_type</strong>: <em>required (string)</em><p>Dlt to work with</p></li></ul><h3>Query Parameters</h3><ul><li><strong>address</strong>: <em>required (string)</em><p>address of the token wallet</p></li><li><strong>contractAddress</strong>: <em>required (string)</em><p>address of the erc20 smartcontract</p></li></ul></div><div class="tab-pane" id="dlt_type__token_balanceof_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+    "$schema": "http://json-schema.org/schema",
+    "description": "GetBalanceTokenResponse Response Schema",
+    "type": "object",
+    "properties": {
+      "result": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [ "code", "description" ]
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "balance": {
+            "type": "string",
+            "description": "Get the token balance for account"
+          }
+        }
+      }
+    },
+    "required": [ "result", "data" ]
+  }
+  </code></pre><h2>HTTP status code <a href="http://httpstatus.es/500" target="_blank">500</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Generic Response Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    }
+  },
+  "required": [ "result" ]
+}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_dlt_type__token_register"><span class="parent">/{dlt_type}/token</span>/register</a> <span class="methods"><a href="#dlt_type__token_register_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_dlt_type__token_register" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#dlt_type__token_register_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Register new ERC20 tokens in hancock to be invoked by alias or address</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="dlt_type__token_register_post"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/{dlt_type}/token</span>/register</h4></div><div class="modal-body"><div class="alert alert-info"><p>Register new ERC20 tokens in hancock to be invoked by alias or address</p></div><ul class="nav nav-tabs"><li class="active"><a href="#dlt_type__token_register_post_request" data-toggle="tab">Request</a></li><li><a href="#dlt_type__token_register_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dlt_type__token_register_post_request"><h3>URI Parameters</h3><ul><li><strong>dlt_type</strong>: <em>required (string)</em><p>Dlt to work with</p></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Register Token schema",
+  "type": "object",
+  "properties": {
+    "address": {
+      "$ref": "#/definitions/nonEmptyString",
+      "description": "Address of the Smart Contrant in the DLT"
+    },
+    "alias": {
+      "$ref": "#/definitions/nonEmptyString",
+      "description": "Alias to use to register in Hancock"
+    }
+  },
+  "required": [
+    "address",
+    "alias"
+  ],
+  "definitions": {
+    "nonEmptyString": {
+        "type": "string",
+        "minLength": 1
+    }
+  }
+}</code></pre></div><div class="tab-pane" id="dlt_type__token_register_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><h2>HTTP status code <a href="http://httpstatus.es/500" target="_blank">500</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Generic Response Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    }
+  },
+  "required": [ "result" ]
+}</code></pre><h2>HTTP status code <a href="http://httpstatus.es/body" target="_blank">body</a></h2></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_dlt_type__token_transfer"><span class="parent">/{dlt_type}/token</span>/transfer</a> <span class="methods"><a href="#dlt_type__token_transfer_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_dlt_type__token_transfer" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#dlt_type__token_transfer_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Transfer ERC20 tokens between two addresses</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="dlt_type__token_transfer_post"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/{dlt_type}/token</span>/transfer</h4></div><div class="modal-body"><div class="alert alert-info"><p>Transfer ERC20 tokens between two addresses</p></div><ul class="nav nav-tabs"><li class="active"><a href="#dlt_type__token_transfer_post_request" data-toggle="tab">Request</a></li><li><a href="#dlt_type__token_transfer_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dlt_type__token_transfer_post_request"><h3>URI Parameters</h3><ul><li><strong>dlt_type</strong>: <em>required (string)</em><p>Dlt to work with</p></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Transfer Token schema",
+  "type": "object",
+  "properties": {
+    "from": {
+      "type": "string"
+    },
+    "to": {
+      "type": "string"
+    },
+    "value": {
+      "type": "string"
+    },
+    "smartContractAddress": {
+      "type": "string"
+    }
+  },
+  "required": [ "from", "to", "value", "smartContractAddress" ]
+}</code></pre></div><div class="tab-pane" id="dlt_type__token_transfer_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><h2>HTTP status code <a href="http://httpstatus.es/500" target="_blank">500</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Generic Response Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    }
+  },
+  "required": [ "result" ]
+}</code></pre><h2>HTTP status code <a href="http://httpstatus.es/body" target="_blank">body</a></h2></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_dlt_type__token_transferfrom"><span class="parent">/{dlt_type}/token</span>/transferFrom</a> <span class="methods"><a href="#dlt_type__token_transferfrom_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_dlt_type__token_transferfrom" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#dlt_type__token_transferfrom_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Transfer ERC20 tokens between two addresses</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="dlt_type__token_transferfrom_post"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/{dlt_type}/token</span>/transferFrom</h4></div><div class="modal-body"><div class="alert alert-info"><p>Transfer ERC20 tokens between two addresses</p></div><ul class="nav nav-tabs"><li class="active"><a href="#dlt_type__token_transferfrom_post_request" data-toggle="tab">Request</a></li><li><a href="#dlt_type__token_transferfrom_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dlt_type__token_transferfrom_post_request"><h3>URI Parameters</h3><ul><li><strong>dlt_type</strong>: <em>required (string)</em><p>Dlt to work with</p></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Transfer Token schema",
+  "type": "object",
+  "properties": {
+    "from": {
+      "type": "string",
+      "description": "The address which invoke the method"
+    },
+    "sender": {
+      "type": "string",
+      "description": "The address which is transferring the tokens"
+    },
+    "to": {
+      "type": "string",
+      "description": "The address which is receiving the tokens"
+    },
+    "value": {
+      "type": "string"
+    },
+    "smartContractAddress": {
+      "type": "string"
+    }
+  },
+  "required": [ "from", "sender", "to", "value", "smartContractAddress" ]
+}</code></pre></div><div class="tab-pane" id="dlt_type__token_transferfrom_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><h2>HTTP status code <a href="http://httpstatus.es/500" target="_blank">500</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Generic Response Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    }
+  },
+  "required": [ "result" ]
+}</code></pre><h2>HTTP status code <a href="http://httpstatus.es/body" target="_blank">body</a></h2></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_dlt_type__token_metadata"><span class="parent">/{dlt_type}/token</span>/metadata</a> <span class="methods"><a href="#dlt_type__token_metadata_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_dlt_type__token_metadata" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#dlt_type__token_metadata_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Obtain the info associated to the ERC20 Token</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="dlt_type__token_metadata_get"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/{dlt_type}/token</span>/metadata</h4></div><div class="modal-body"><div class="alert alert-info"><p>Obtain the info associated to the ERC20 Token</p></div><ul class="nav nav-tabs"><li class="active"><a href="#dlt_type__token_metadata_get_request" data-toggle="tab">Request</a></li><li><a href="#dlt_type__token_metadata_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dlt_type__token_metadata_get_request"><h3>URI Parameters</h3><ul><li><strong>dlt_type</strong>: <em>required (string)</em><p>Dlt to work with</p></li></ul><h3>Query Parameters</h3><ul><li><strong>address</strong>: <em>required (string)</em><p>address of the erc20</p></li></ul></div><div class="tab-pane" id="dlt_type__token_metadata_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+    "$schema": "http://json-schema.org/schema",
+    "description": "GetBalanceTokenResponse Response Schema",
+    "type": "object",
+    "properties": {
+      "result": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [ "code", "description" ]
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "balance": {
+            "type": "string",
+            "description": "Get the token balance for account"
+          }
+        }
+      }
+    },
+    "required": [ "result", "data" ]
+  }
+  </code></pre><h2>HTTP status code <a href="http://httpstatus.es/500" target="_blank">500</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Generic Response Schema",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [ "code", "description" ]
+    }
+  },
+  "required": [ "result" ]
+}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_dlt_type__token_approve"><span class="parent">/{dlt_type}/token</span>/approve</a> <span class="methods"><a href="#dlt_type__token_approve_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_dlt_type__token_approve" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#dlt_type__token_approve_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Token ERC20 owner can approve for spender to transfer tokens from the token owner&#39;s account</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="dlt_type__token_approve_post"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/{dlt_type}/token</span>/approve</h4></div><div class="modal-body"><div class="alert alert-info"><p>Token ERC20 owner can approve for spender to transfer tokens from the token owner&#39;s account</p></div><ul class="nav nav-tabs"><li class="active"><a href="#dlt_type__token_approve_post_request" data-toggle="tab">Request</a></li><li><a href="#dlt_type__token_approve_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dlt_type__token_approve_post_request"><h3>URI Parameters</h3><ul><li><strong>dlt_type</strong>: <em>required (string)</em><p>Dlt to work with</p></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Approve Transfer Token schema",
+  "type": "object",
+  "properties": {
+    "from": {
+      "type": "string"
+    },
+    "spender": {
+      "type": "string"
+    },
+    "value": {
+      "type": "string"
+    },
+    "smartContractAddress": {
+      "type": "string"
+    }
+  },
+  "required": [ "from", "spender", "value", "smartContractAddress" ]
+}</code></pre></div><div class="tab-pane" id="dlt_type__token_approve_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><h2>HTTP status code <a href="http://httpstatus.es/500" target="_blank">500</a></h2><h2>HTTP status code <a href="http://httpstatus.es/" target="_blank"></a></h2></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_dlt_type__token_allowance"><span class="parent">/{dlt_type}/token</span>/allowance</a> <span class="methods"><a href="#dlt_type__token_allowance_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_dlt_type__token_allowance" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#dlt_type__token_allowance_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Provides the number of tokens allowed to be transferred from a given address by another given address</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="dlt_type__token_allowance_post"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/{dlt_type}/token</span>/allowance</h4></div><div class="modal-body"><div class="alert alert-info"><p>Provides the number of tokens allowed to be transferred from a given address by another given address</p></div><ul class="nav nav-tabs"><li class="active"><a href="#dlt_type__token_allowance_post_request" data-toggle="tab">Request</a></li><li><a href="#dlt_type__token_allowance_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dlt_type__token_allowance_post_request"><h3>URI Parameters</h3><ul><li><strong>dlt_type</strong>: <em>required (string)</em><p>Dlt to work with</p></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>
+{
+  "$schema": "http://json-schema.org/schema",
+  "description": "Allowance Token schema",
+  "type": "object",
+  "properties": {
+    "from": {
+      "type": "string"
+    },
+    "tokenOwner": {
+      "type": "string",
+      "description": "address of the owner of the tokens"
+    },
+    "spender": {
+      "type": "string",
+      "description": "address which is allowed to spent the tokens"
+    },
+    "smartContractAddress": {
+      "type": "string"
+    }
+  },
+  "required": [ "from", "tokenOwner", "spender", "smartContractAddress" ]
+}</code></pre></div><div class="tab-pane" id="dlt_type__token_allowance_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><h2>HTTP status code <a href="http://httpstatus.es/500" target="_blank">500</a></h2><h2>HTTP status code <a href="http://httpstatus.es/" target="_blank"></a></h2></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="protocol" class="panel-title">Protocol</h3></div><div class="panel-body"><div class="top-resource-description"><p>API to adapt operations to Hancock Protocol</p></div><div class="panel-group"><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_protocol_encode"><span class="parent">/protocol</span>/encode</a> <span class="methods"><a href="#protocol_encode_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_protocol_encode" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#protocol_encode_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Encode operation data to Hancock Protocol</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="protocol_encode_post"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/protocol</span>/encode</h4></div><div class="modal-body"><div class="alert alert-info"><p>Encode operation data to Hancock Protocol</p></div><ul class="nav nav-tabs"><li class="active"><a href="#protocol_encode_post_request" data-toggle="tab">Request</a></li><li><a href="#protocol_encode_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="protocol_encode_post_request"><h3>Query Parameters</h3><ul><li><strong>application/json</strong>: <em>required (json)</em></li></ul></div><div class="tab-pane" id="protocol_encode_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: string</p><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_protocol_decode"><span class="parent">/protocol</span>/decode</a> <span class="methods"><a href="#protocol_decode_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_protocol_decode" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#protocol_decode_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Obtein operation decode</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="protocol_decode_get"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/protocol</span>/decode</h4></div><div class="modal-body"><div class="alert alert-info"><p>Obtein operation decode</p></div><ul class="nav nav-tabs"><li class="active"><a href="#protocol_decode_get_request" data-toggle="tab">Request</a></li><li><a href="#protocol_decode_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="protocol_decode_get_request"><h3>Query Parameters</h3><ul><li><strong>application/json</strong>: <em>required (json)</em></li></ul></div><div class="tab-pane" id="protocol_decode_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: json</p><p><strong>Content</strong>:</p><pre><code>{
+    "$schema": "http://json-schema.org/schema",
+    "description": "Protocol Decode Param Model Response",
+    "type": "object",
+    "properties": {
+      "result": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [ "code", "description" ]
+      },
+      "data": {
+        "action": {
+          "type": "string",
+          "enum": ["transfer"]
+        },
+        "body": {
+          "type": "object",
+          "properties": {
+            "to": {
+              "type": "string"
+            },
+            "value": {
+              "type": "string"
+            },
+            "data": {
+              "type": "string"
+            }
+          }
+        },
+        "dlt": {
+          "type": "string",
+          "enum": ["ethereum"]
+        },
+        "required": [ "action", "body", "dlt" ]
+      }
+    }
+  }
+  </code></pre><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2></div></div></div></div></div></div></div></div></div></div></div><div class="col-md-3"><div id="sidebar" class="hidden-print affix" role="complementary"><ul class="nav nav-pills nav-stacked"><li><a href="#dlt_type_">DLT</a></li><li><a href="#protocol">Protocol</a></li></ul></div></div></div></div></body></html>
